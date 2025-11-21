@@ -9,6 +9,10 @@ const authRouter = require("./routes/authRouter");
 const path = require('path');
 // HTTP Server
 const mongoURI = process.env.MONGODB_URI;
+if (!mongoURI) {
+  console.error("Error: MONGODB_URI is not defined!");
+  process.exit(1);
+}
 const server = http.createServer(app);
 const session = require('express-session');
 const MongoStore = require('connect-mongodb-session')(session);
