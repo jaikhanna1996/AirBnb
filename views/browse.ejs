@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('header', {pageTitle: 'Browse Properties - Airbnb'}) %>
+<body class="bg-gray-50 min-h-screen">
+    <%- include('navigation', {activeTab: activeTab}) %>
+    
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="text-center mb-8">
+            <h1 class="text-4xl font-bold text-gray-900 mb-4">Browse Properties</h1>
+            <p class="text-xl text-gray-600">Discover amazing places to stay around the world</p>
+        </div>
+        
+        <% if (registeredHomes && registeredHomes.length > 0) { %>
+            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem;">
+                <% registeredHomes.forEach(home => { %>
+                    <div class="bg-white rounded-lg shadow-md" style="overflow: hidden;">
+                        <!-- Property Image -->
+                        <div style="position: relative; height: 200px; background-color: #f3f4f6;">
+                            <% if (home.photoUrl) { %>
+                                <img src="<%= home.photoUrl %>" alt="<%= home.houseName %>" style="width: 100%; height: 100%; object-fit: cover;">
+                            <% } else { %>
+                                <div class="flex items-center justify-center" style="width: 100%; height: 100%; background-color: #d1d5db;">
+                                    <svg style="width: 3rem; height: 3rem; color: #9ca3af;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                    </svg>
+                                </div>
+                            <% } %>
+                            <!-- Rating Badge -->
+                            <% if (home.rating !== null && home.rating !== undefined) { %>
+                                <div class="bg-white rounded-full shadow-md" style="position: absolute; top: 0.75rem; right: 0.75rem; padding: 0.25rem 0.5rem;">
+                                    <div class="flex items-center" style="gap: 0.25rem;">
+                                        <svg style="width: 1rem; height: 1rem; color: #fbbf24; fill: currentColor;" viewBox="0 0 20 20">
+                                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                                        </svg>
+                                        <span class="text-sm font-medium text-gray-900"><%= home.rating %></span>
+                                    </div>
+                                </div>
+                            <% } %>
+                        </div>
+                        
+                        <!-- Property Details -->
+                        <div style="padding: 1rem;">
+                            <h3 class="font-semibold text-gray-900 mb-2" style="font-size: 1.125rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"><%= home.houseName %></h3>
+                            
+                            <% if (home.location) { %>
+                                <div class="flex items-center text-gray-600 mb-2">
+                                    <svg style="width: 1rem; height: 1rem; margin-right: 0.25rem;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                    </svg>
+                                    <span class="text-sm" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"><%= home.location %></span>
+                                </div>
+                            <% } %>
+                            
+                            <div class="flex items-center justify-between" style="margin-top: 1rem;">
+                                <% if (home.price !== null && home.price !== undefined) { %>
+                                    <div style="font-size: 1.125rem;" class="font-bold text-gray-900">
+                                        $<%= home.price %><span class="text-sm font-medium text-gray-600">/night</span>
+                                    </div>
+                                <% } else { %>
+                                    <div style="font-size: 1.125rem;" class="font-bold text-gray-500">Price N/A</div>
+                                <% } %>
+                                <a href="/browse/<%= home._id %>" class="inline-block bg-red-500 hover:bg-red-600 text-white rounded-lg text-sm font-medium transition-colors" style="padding: 0.5rem 1rem; text-decoration: none;">
+                                    View Details
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                <% }); %>
+            </div>
+        <% } else { %>
+            <div class="text-center" style="padding: 4rem 0;">
+                <svg class="mx-auto text-gray-500" style="height: 3rem; width: 3rem;" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                </svg>
+                <h3 class="text-sm font-medium text-gray-900" style="margin-top: 0.5rem;">No properties available</h3>
+                <p class="text-sm text-gray-500" style="margin-top: 0.25rem;">Get started by adding your first property.</p>
+                <div style="margin-top: 1.5rem;">
+                    <a href="/host/add-home" class="inline-block bg-red-500 hover:bg-red-600 text-white font-medium rounded-lg transition-colors" style="padding: 0.5rem 1rem; text-decoration: none;">
+                        Add Property
+                    </a>
+                </div>
+            </div>
+        <% } %>
+    </main>
+<%- include('footer') %>
+</body>
+</html>

@@ -1,0 +1,27 @@
+    <header class="bg-white shadow-sm border-b">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-6">
+                <a href="/" class="text-3xl font-bold text-red-500">airbnb</a>
+                <nav class="flex items-center space-x-5">
+                    <% if (isLoggedIn) { %>
+                    <a href="/" class="<%= activeTab === 'home' ? 'text-red-600 font-semibold border-b border-red-600' : 'text-gray-700 hover:text-red-500' %> inline-block px-4 py-3 rounded-lg transition-colors">Home</a>
+                        <a href="/browse" class="<%= activeTab === 'browse' ? 'text-red-600 font-semibold border-b border-red-600' : 'text-gray-700 hover:text-red-500' %> inline-block px-4 py-3 rounded-lg transition-colors">Browse Properties</a>
+                        <a href="/host/add-home" class="<%= activeTab === 'host' ? 'text-red-600 font-semibold border-b border-red-600' : 'text-gray-700 hover:text-red-500' %> inline-block px-4 py-3 rounded-lg transition-colors">Host</a>
+                    <% } %>
+                    <% if (!isLoggedIn) { %>
+                        <a href="/signup" class="<%= activeTab === 'signup' ? 'text-red-600 font-semibold border-b border-red-600' : 'text-gray-700 hover:text-red-500' %> inline-block px-4 py-3 rounded-lg transition-colors">Sign Up</a>
+                    <% } %>
+                    <% if (!isLoggedIn) { %>
+                        <a href="/login" class="<%= activeTab === 'login' ? 'text-red-600 font-semibold border-b border-red-600' : 'text-gray-700 hover:text-red-500' %> inline-block px-4 py-3 rounded-lg transition-colors">Login</a>
+                    <% } else { %>
+                        <form action="/logout" method="POST" class="inline">
+                            <button 
+                              class="<%= activeTab === 'logout' ? 'text-red-600 font-semibold border-b border-red-600' : 'text-gray-700 hover:text-red-500' %> inline-block px-4 py-3 rounded-lg transition-colors">
+                                Logout
+                            </button>
+                        </form>
+                    <% } %>
+                </nav>
+            </div>
+        </div>
+    </header>

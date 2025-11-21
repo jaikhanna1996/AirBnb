@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('header', {pageTitle: 'Airbnb - Find your perfect stay'}) %>
+<body class="bg-gray-50 min-h-screen">
+    <%- include('navigation', {activeTab: activeTab}) %>
+    
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="text-center">
+            <h2 class="text-4xl font-bold text-gray-900 mb-4">Find your perfect stay</h2>
+            <p class="text-xl text-gray-600 mb-8">List your home or browse available properties</p>
+            
+            <div class="space-y-4">
+                <a href="/host/add-home" class="inline-block bg-red-500 hover:bg-red-600 text-white font-semibold py-3 px-6 rounded-lg transition-colors">
+                    List Your Property
+                </a>
+                <div class="text-sm text-gray-500">
+                    <a href="/browse" class="hover:text-red-500 transition-colors">Browse properties</a>
+                </div>
+            </div>
+        </div>
+    </main>
+<%- include('footer') %>
