@@ -1,3 +1,4 @@
+require('dotenv').config();
 const http = require("http");
 const express = require("express");
 const bodyParser = require('body-parser');
@@ -7,7 +8,7 @@ const {hostRouter} = require("./routes/hostRouter");
 const authRouter = require("./routes/authRouter");
 const path = require('path');
 // HTTP Server
-const mongoURI = 'mongodb+srv://jaikhanna1996:Jaikhanna%40123@cluster0.rih9ak4.mongodb.net/airbnb?retryWrites=true&w=majority&appName=Cluster0';
+const mongoURI = process.env.MONGODB_URI;
 const server = http.createServer(app);
 const session = require('express-session');
 const MongoStore = require('connect-mongodb-session')(session);
