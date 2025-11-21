@@ -19,7 +19,7 @@ const MongoStore = require('connect-mongodb-session')(session);
 
 
 app.set("view engine", "ejs");
-app.set("views", "views");
+app.set("views", path.join(__dirname, "views"));
 
 // Middleware ordering is important
 // 1. bodyParser middleware
@@ -29,7 +29,7 @@ app.set("views", "views");
 
 const rootDirectory = require('./utils/pathUtil');
 const { default: mongoose } = require("mongoose");
-app.use(express.static((path.join(rootDirectory, 'public'))));
+app.use(express.static(path.join(__dirname, 'public')));
 
 const store = new MongoStore({
   uri: mongoURI,
