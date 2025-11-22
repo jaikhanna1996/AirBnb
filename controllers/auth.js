@@ -5,7 +5,6 @@ const User = require('../models/user');
 const bcrypt = require('bcryptjs');
 
 exports.getLogin = (req, res) => {
-  console.log("handling '/login' for GET request", req.url, req.method);
   res.render('login', { activeTab: 'login', isLoggedIn: false });
 };
 
@@ -35,7 +34,6 @@ exports.postLogin = async (req, res) => {
 
     req.session.isLoggedIn = true;
     req.session.user = user._id; // Store user ID in session
-    console.log("handling '/login' for POST request", req.url, req.method);
     res.redirect('/');
   } catch (error) {
     console.error('Error during login:', error);
@@ -48,7 +46,6 @@ exports.postLogin = async (req, res) => {
 };
 
 exports.getSignup = (req, res) => {
-  console.log("handling '/signup' for GET request", req.url, req.method);
   res.render('signup', { activeTab: 'signup', isLoggedIn: false });
 };
 
@@ -95,7 +92,6 @@ exports.postSignup = async (req, res) => {
 
     await user.save();
 
-    console.log("handling '/signup' for POST request", req.url, req.method);
     res.redirect('/login');
   } catch (error) {
     console.error('Error saving user:', error);

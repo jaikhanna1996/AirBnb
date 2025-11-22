@@ -9,7 +9,8 @@ const homeSchema = new mongoose.Schema({
   location: { type: String, required: true },
   rating: { type: Number, default: 0 },
   photoUrl: String,
-  description : String
+  description : String,
+  document: String
 });
 
 

@@ -6,7 +6,9 @@
                     <% if (isLoggedIn) { %>
                     <a href="/" class="<%= activeTab === 'home' ? 'text-red-600 font-semibold border-b border-red-600' : 'text-gray-700 hover:text-red-500' %> inline-block px-4 py-3 rounded-lg transition-colors">Home</a>
                         <a href="/browse" class="<%= activeTab === 'browse' ? 'text-red-600 font-semibold border-b border-red-600' : 'text-gray-700 hover:text-red-500' %> inline-block px-4 py-3 rounded-lg transition-colors">Browse Properties</a>
+                        <% if (typeof userType !== 'undefined' && userType === 'host') { %>
                         <a href="/host/add-home" class="<%= activeTab === 'host' ? 'text-red-600 font-semibold border-b border-red-600' : 'text-gray-700 hover:text-red-500' %> inline-block px-4 py-3 rounded-lg transition-colors">Host</a>
+                        <% } %>
                     <% } %>
                     <% if (!isLoggedIn) { %>
                         <a href="/signup" class="<%= activeTab === 'signup' ? 'text-red-600 font-semibold border-b border-red-600' : 'text-gray-700 hover:text-red-500' %> inline-block px-4 py-3 rounded-lg transition-colors">Sign Up</a>

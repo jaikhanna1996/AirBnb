@@ -2,14 +2,11 @@ const Home = require('../models/homes');
 
 // GET: Render Add Home Page
 exports.getAddHome = (req, res) => {
-  console.log("handling '/host/add-home' for GET request", req.url, req.method);
   res.render('addHome', { activeTab: 'host', isLoggedIn: req.isLoggedIn });
 };
 
 // POST: Add a new home
 exports.postAddHome = async (req, res) => {
-  console.log("handling '/add-home' for POST request", req.url, req.method, req.body);
-
   try {
     const homeData = {
       houseName: req.body.houseName,
@@ -17,7 +14,8 @@ exports.postAddHome = async (req, res) => {
       location: req.body.location,
       rating: req.body.rating,
       photoUrl: req.body.photoUrl,
-      description: req.body.description
+      description: req.body.description,
+      document: req.file ? '/uploads/' + req.file.filename : null
     };
 
     await Home.create(homeData);
@@ -31,7 +29,6 @@ exports.postAddHome = async (req, res) => {
 
 // GET: Home Page
 exports.getHome = (req, res) => {
-  console.log("handling '/' for GET request", req.url, req.method);
   res.render('home', { activeTab: 'home', isLoggedIn: req.isLoggedIn });
 };
 

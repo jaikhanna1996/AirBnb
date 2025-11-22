@@ -17,7 +17,6 @@ const server = http.createServer(app);
 const session = require('express-session');
 const MongoStore = require('connect-mongodb-session')(session);
 
-
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
@@ -29,7 +28,7 @@ app.set("views", path.join(__dirname, "views"));
 
 const rootDirectory = require('./utils/pathUtil');
 const { default: mongoose } = require("mongoose");
-app.use(express.static(path.join(__dirname, 'public')));
+const User = require('./models/user');
 
 const store = new MongoStore({
   uri: mongoURI,
@@ -46,19 +45,41 @@ app.use(session({
   store: store
 }));
 
-app.use(bodyParser.urlencoded({ extended: false })); // bodyParser middleware
+app.use(express.urlencoded({ extended: false })); // bodyParser middleware
+app.use(express.static(path.join(__dirname, 'public')));
 
-app.use((req, res, next) => {
+app.use(async (req, res, next) => {
   req.isLoggedIn = req.session.isLoggedIn || false;
-  console.log("Logged in?", req.isLoggedIn);
+  if (req.isLoggedIn && req.session.user) {
+    try {
+      const user = await User.findById(req.session.user);
+      req.user = user;
+      res.locals.userType = user ? user.userType : null;
+    } catch (err) {
+      console.error('Error fetching user:', err);
+      res.locals.userType = null;
+    }
+  } else {
+    res.locals.userType = null;
+  }
   next();
 });
 app.use(authRouter);
 
 app.use(userRouter);
-app.use("/host", (req, res, next) => {
+app.use("/host", async (req, res, next) => {
   if (req.isLoggedIn) {
-    next();
+    try {
+      const user = await User.findById(req.session.user);
+      if (user && user.userType === 'host') {
+        next();
+      } else {
+        res.redirect('/');
+      }
+    } catch (err) {
+      console.error('Error fetching user:', err);
+      res.redirect('/');
+    }
   } else {
     res.redirect('/login');
   }
