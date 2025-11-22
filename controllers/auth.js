@@ -78,6 +78,11 @@ exports.postSignup = async (req, res) => {
   const { firstName, lastName, email, password, usertype, terms } = req.body;
 
   try {
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res.render('signup', { errors: [{ msg: 'This email is already registered' }], activeTab: 'signup', isLoggedIn: false });
+    }
+
     const hashedPassword = await bcrypt.hash(password, 12);
 
     const user = new User({

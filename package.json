@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node app.js",
-    "dev": "nodemon --inspect app.js && npm run watch:css",
+    "dev": "nodemon app.js && npm run watch:css",
     "build": "npm run build:css",
     "build:css": "tailwindcss -i ./public/input.css -o ./public/output.css",
     "watch:css": "tailwindcss -i ./public/input.css -o ./public/output.css --watch"

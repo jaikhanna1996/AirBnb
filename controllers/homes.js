@@ -62,18 +62,3 @@ exports.getHomeDetails = async (req, res) => {
   }
 };
 
-exports.deleteHome = (req, res) => {
-  const homeId = req.params.homeId;
-
-  Home.findByIdAndDelete(homeId)
-      .then(() => {
-          console.log('Property deleted successfully');
-          res.redirect('/browse'); // redirect back to browse page
-      })
-      .catch(err => {
-          console.error('Error deleting property:', err);
-          res.status(500).render('404', { message: 'Failed to delete property', activeTab: 'browse' });
-      });
-};
-
-

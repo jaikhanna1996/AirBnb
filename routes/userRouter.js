@@ -12,8 +12,6 @@ userRouter.get('/browse', homesController.getBrowse);
 // Dynamic route for individual home details
 userRouter.get('/browse/:homeId', homesController.getHomeDetails);
 userRouter.get("/", homesController.getHome);
-// Delete home
-userRouter.post('/browse/delete/:homeId', homesController.deleteHome);
 
 
 module.exports = userRouter;
